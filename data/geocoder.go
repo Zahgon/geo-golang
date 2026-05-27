@@ -18,28 +18,18 @@ type dataGeocoder struct {
 
 // Geocoder constructs data geocoder
 func Geocoder(addressToLocation AddressToLocation, LocationToAddress LocationToAddress) geo.Geocoder {
-	return dataGeocoder{
-		AddressToLocation: addressToLocation,
-		LocationToAddress: LocationToAddress,
-	}
+	_ = "STUB: not implemented"
+	return *new(geo.Geocoder)
 }
 
 // Geocode returns location for address
 func (d dataGeocoder) Geocode(address string) (*geo.Location, error) {
-	addr := geo.Address{
-		FormattedAddress: address,
-	}
-	if l, ok := d.AddressToLocation[addr]; ok {
-		return &l, nil
-	}
-
+	_ = "STUB: not implemented"
 	return nil, nil
 }
 
 // ReverseGeocode returns address for location
 func (d dataGeocoder) ReverseGeocode(lat, lng float64) (*geo.Address, error) {
-	if address, ok := d.LocationToAddress[geo.Location{Lat: lat, Lng: lng}]; ok {
-		return &address, nil
-	}
+	_ = "STUB: not implemented"
 	return nil, nil
 }

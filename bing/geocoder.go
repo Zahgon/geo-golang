@@ -2,10 +2,6 @@
 package bing
 
 import (
-	"errors"
-	"fmt"
-	"strings"
-
 	"github.com/codingsince1985/geo-golang"
 )
 
@@ -34,52 +30,22 @@ type (
 
 // Geocoder constructs Bing geocoder
 func Geocoder(key string, baseURLs ...string) geo.Geocoder {
-	return geo.HTTPGeocoder{
-		EndpointBuilder:       baseURL(getURL(key, baseURLs...)),
-		ResponseParserFactory: func() geo.ResponseParser { return &geocodeResponse{} },
-	}
+	_ = "STUB: not implemented"
+	return *new(geo.Geocoder)
 }
 
-func getURL(key string, baseURLs ...string) string {
-	if len(baseURLs) > 0 {
-		return baseURLs[0]
-	}
-	return "http://dev.virtualearth.net/REST/v1/Locations*key=" + key
-}
+func getURL(key string, baseURLs ...string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) GeocodeURL(address string) string {
-	return strings.Replace(string(b), "*", "?q="+address+"&", 1)
-}
+func (b baseURL) GeocodeURL(address string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) ReverseGeocodeURL(l geo.Location) string {
-	return strings.Replace(string(b), "*", fmt.Sprintf("/%f,%f?", l.Lat, l.Lng), 1)
-}
+func (b baseURL) ReverseGeocodeURL(l geo.Location) string { _ = "STUB: not implemented"; return "" }
 
 func (r *geocodeResponse) Location() (*geo.Location, error) {
-	if len(r.ResourceSets) <= 0 || len(r.ResourceSets[0].Resources) <= 0 {
-		return nil, nil
-	}
-	c := r.ResourceSets[0].Resources[0].Point.Coordinates
-	return &geo.Location{
-		Lat: c[0],
-		Lng: c[1],
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r *geocodeResponse) Address() (*geo.Address, error) {
-	if len(r.ErrorDetails) > 0 {
-		return nil, errors.New(strings.Join(r.ErrorDetails, " "))
-	}
-	if len(r.ResourceSets) <= 0 || len(r.ResourceSets[0].Resources) <= 0 {
-		return nil, nil
-	}
-
-	a := r.ResourceSets[0].Resources[0].Address
-	return &geo.Address{
-		FormattedAddress: a.FormattedAddress,
-		Street:           a.AddressLine,
-		City:             a.Locality,
-		Postcode:         a.PostalCode,
-		Country:          a.CountryRegion,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

@@ -25,39 +25,7 @@ type Address struct {
 }
 
 // Locality checks different fields for the locality name
-func (a Address) Locality() string {
-	var locality string
-
-	if a.City != "" {
-		locality = a.City
-	} else if a.Town != "" {
-		locality = a.Town
-	} else if a.Village != "" {
-		locality = a.Village
-	} else if a.Hamlet != "" {
-		locality = a.Hamlet
-	}
-
-	return locality
-}
+func (a Address) Locality() string { _ = "STUB: not implemented"; return "" }
 
 // Street checks different fields for the street name
-func (a Address) Street() string {
-	var street string
-
-	if a.Road != "" {
-		street = a.Road
-	} else if a.Pedestrian != "" {
-		street = a.Pedestrian
-	} else if a.Path != "" {
-		street = a.Path
-	} else if a.Cycleway != "" {
-		street = a.Cycleway
-	} else if a.Footway != "" {
-		street = a.Footway
-	} else if a.Highway != "" {
-		street = a.Highway
-	}
-
-	return street
-}
+func (a Address) Street() string { _ = "STUB: not implemented"; return "" }

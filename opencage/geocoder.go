@@ -2,9 +2,6 @@
 package opencage
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/codingsince1985/geo-golang"
 	"github.com/codingsince1985/geo-golang/osm"
 )
@@ -27,64 +24,22 @@ type (
 
 // Geocoder constructs OpenCage geocoder
 func Geocoder(key string, baseURLs ...string) geo.Geocoder {
-	return geo.HTTPGeocoder{
-		EndpointBuilder:       baseURL(getURL(key, baseURLs...)),
-		ResponseParserFactory: func() geo.ResponseParser { return &geocodeResponse{} },
-	}
+	_ = "STUB: not implemented"
+	return *new(geo.Geocoder)
 }
 
-func getURL(key string, baseURLs ...string) string {
-	if len(baseURLs) > 0 {
-		return baseURLs[0]
-	}
-	return "http://api.opencagedata.com/geocode/v1/json?key=" + key + "&q="
-}
+func getURL(key string, baseURLs ...string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) GeocodeURL(address string) string { return string(b) + address }
+func (b baseURL) GeocodeURL(address string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) ReverseGeocodeURL(l geo.Location) string {
-	return string(b) + fmt.Sprintf("%+f,%+f", l.Lat, l.Lng)
-}
+func (b baseURL) ReverseGeocodeURL(l geo.Location) string { _ = "STUB: not implemented"; return "" }
 
 func (r *geocodeResponse) Location() (*geo.Location, error) {
-	if r.Status.Code >= 400 {
-		return nil, fmt.Errorf("geocoding error: %s", r.Status.Message)
-	}
-	if len(r.Results) == 0 {
-		return nil, nil
-	}
-
-	return &geo.Location{
-		Lat: r.Results[0].Geometry.Lat,
-		Lng: r.Results[0].Geometry.Lng,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r *geocodeResponse) Address() (*geo.Address, error) {
-	if r.Status.Code >= 400 {
-		return nil, fmt.Errorf("geocoding error: %s", r.Status.Message)
-	}
-	if len(r.Results) == 0 {
-		return nil, nil
-	}
-
-	addr := r.Results[0].Components
-
-	locality := addr.Locality()
-	if locality == "" {
-		locality = addr.Suburb
-	}
-	return &geo.Address{
-		FormattedAddress: r.Results[0].Formatted,
-		HouseNumber:      addr.HouseNumber,
-		Street:           addr.Street(),
-		Suburb:           addr.Suburb,
-		Postcode:         addr.Postcode,
-		City:             locality,
-		CountryCode:      strings.ToUpper(addr.CountryCode),
-		Country:          addr.Country,
-		County:           addr.County,
-		State:            addr.State,
-		StateDistrict:    addr.StateDistrict,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }

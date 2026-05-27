@@ -2,10 +2,6 @@
 package yandex
 
 import (
-	"fmt"
-	"strconv"
-	"strings"
-
 	"github.com/codingsince1985/geo-golang"
 )
 
@@ -70,87 +66,26 @@ const (
 
 // Geocoder constructs Yandex geocoder
 func Geocoder(apiKey string, baseURLs ...string) geo.Geocoder {
-	return geo.HTTPGeocoder{
-		EndpointBuilder:       baseURL(getURL(apiKey, baseURLs...)),
-		ResponseParserFactory: func() geo.ResponseParser { return &geocodeResponse{} },
-	}
+	_ = "STUB: not implemented"
+	return *new(geo.Geocoder)
 }
 
-func getURL(apiKey string, baseURLs ...string) string {
-	if len(baseURLs) > 0 {
-		return baseURLs[0]
-	}
-	return fmt.Sprintf("https://geocode-maps.yandex.ru/1.x/?results=1&lang=en_US&format=json&apikey=%s&", apiKey)
-}
+func getURL(apiKey string, baseURLs ...string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) GeocodeURL(address string) string {
-	return string(b) + "geocode=" + address
-}
+func (b baseURL) GeocodeURL(address string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) ReverseGeocodeURL(l geo.Location) string {
-	return string(b) + fmt.Sprintf("sco=latlong&geocode=%f,%f", l.Lat, l.Lng)
-}
+func (b baseURL) ReverseGeocodeURL(l geo.Location) string { _ = "STUB: not implemented"; return "" }
 
 func (r *geocodeResponse) Location() (*geo.Location, error) {
-	if r.Response.GeoObjectCollection.MetaDataProperty.GeocoderResponseMetaData.Found == "0" {
-		return nil, nil
-	}
-	if len(r.Response.GeoObjectCollection.FeatureMember) == 0 {
-		return nil, nil
-	}
-	featureMember := r.Response.GeoObjectCollection.FeatureMember[0]
-	result := &geo.Location{}
-	latLng := strings.Split(featureMember.GeoObject.Point.Pos, " ")
-	if len(latLng) > 1 {
-		// Yandex return geo coord in format "long lat"
-		result.Lat, _ = strconv.ParseFloat(latLng[1], 64)
-		result.Lng, _ = strconv.ParseFloat(latLng[0], 64)
-	}
-
-	return result, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
+
+// Yandex return geo coord in format "long lat"
 
 func (r *geocodeResponse) Address() (*geo.Address, error) {
-	if r.Response.GeoObjectCollection.MetaDataProperty.GeocoderResponseMetaData.Found == "0" {
-		return nil, nil
-	}
-	if len(r.Response.GeoObjectCollection.FeatureMember) == 0 {
-		return nil, nil
-	}
-
-	return parseYandexResult(r.Response.GeoObjectCollection.FeatureMember[0]), nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
-func parseYandexResult(r *yandexFeatureMember) *geo.Address {
-	addr := &geo.Address{}
-	res := r.GeoObject.MetaDataProperty.GeocoderMetaData
-
-	for _, comp := range res.Address.Components {
-		switch comp.Kind {
-		case componentTypeHouseNumber:
-			addr.HouseNumber = comp.Name
-			continue
-		case componentTypeStreetName:
-			addr.Street = comp.Name
-			continue
-		case componentTypeLocality:
-			addr.City = comp.Name
-			continue
-		case componentTypeStateDistrict:
-			addr.StateDistrict = comp.Name
-			continue
-		case componentTypeState:
-			addr.State = comp.Name
-			continue
-		case componentTypeCountry:
-			addr.Country = comp.Name
-			continue
-		}
-	}
-
-	addr.Postcode = res.Address.PostalCode
-	addr.CountryCode = res.Address.CountryCode
-	addr.FormattedAddress = res.Address.Formatted
-
-	return addr
-}
+func parseYandexResult(r *yandexFeatureMember) *geo.Address { _ = "STUB: not implemented"; return nil }

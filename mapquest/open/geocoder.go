@@ -2,9 +2,6 @@
 package open
 
 import (
-	"fmt"
-	"strings"
-
 	"github.com/codingsince1985/geo-golang"
 )
 
@@ -31,59 +28,22 @@ type (
 
 // Geocoder constructs MapRequest Open geocoder
 func Geocoder(key string, baseURLs ...string) geo.Geocoder {
-
-	return geo.HTTPGeocoder{
-		EndpointBuilder:       baseURL(getURL(key, baseURLs...)),
-		ResponseParserFactory: func() geo.ResponseParser { return &geocodeResponse{} },
-	}
+	_ = "STUB: not implemented"
+	return *new(geo.Geocoder)
 }
 
-func getURL(key string, baseURLs ...string) string {
-	if len(baseURLs) > 0 {
-		return baseURLs[0]
-	}
-	return "http://open.mapquestapi.com/geocoding/v1/*?key=" + key + "&location="
-}
+func getURL(key string, baseURLs ...string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) GeocodeURL(address string) string {
-	return strings.Replace(string(b), "*", "address", 1) + address
-}
+func (b baseURL) GeocodeURL(address string) string { _ = "STUB: not implemented"; return "" }
 
-func (b baseURL) ReverseGeocodeURL(l geo.Location) string {
-	return strings.Replace(string(b), "*", "reverse", 1) + fmt.Sprintf("%f,%f", l.Lat, l.Lng)
-}
+func (b baseURL) ReverseGeocodeURL(l geo.Location) string { _ = "STUB: not implemented"; return "" }
 
 func (r *geocodeResponse) Location() (*geo.Location, error) {
-	if len(r.Results) == 0 || len(r.Results[0].Locations) == 0 {
-		return nil, nil
-	}
-
-	loc := r.Results[0].Locations[0].LatLng
-	return &geo.Location{
-		Lat: loc.Lat,
-		Lng: loc.Lng,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
 
 func (r *geocodeResponse) Address() (*geo.Address, error) {
-	if len(r.Results) == 0 || len(r.Results[0].Locations) == 0 {
-		return nil, nil
-	}
-
-	p := r.Results[0].Locations[0]
-	if p.Street == "" || p.AdminArea5 == "" {
-		return nil, nil
-	}
-
-	formattedAddress := p.Street + ", " + p.PostalCode + ", " + p.AdminArea5 + ", " + p.AdminArea3 + ", " + p.AdminArea1
-	return &geo.Address{
-		FormattedAddress: formattedAddress,
-		Street:           p.Street,
-		Suburb:           p.AdminArea6,
-		Postcode:         p.PostalCode,
-		City:             p.AdminArea5,
-		County:           p.AdminArea4,
-		State:            p.AdminArea3,
-		CountryCode:      p.AdminArea1,
-	}, nil
+	_ = "STUB: not implemented"
+	return nil, nil
 }
